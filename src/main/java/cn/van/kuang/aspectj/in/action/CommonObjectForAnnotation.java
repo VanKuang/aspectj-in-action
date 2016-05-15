@@ -3,9 +3,9 @@ package cn.van.kuang.aspectj.in.action;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class CommonObject {
+public class CommonObjectForAnnotation {
 
-    private final static Logger logger = LoggerFactory.getLogger(CommonObject.class);
+    private final static Logger logger = LoggerFactory.getLogger(CommonObjectForAnnotation.class);
 
     public void withoutParamAndReturnValue() {
         logger.info("----------Invoked withoutParamAndReturnValue()");
@@ -31,11 +31,11 @@ public class CommonObject {
 
     @Override
     public String toString() {
-        return "CommonObject{}";
+        return "CommonObjectForAnnotation{}";
     }
 
     public static void main(String[] args) throws CloneNotSupportedException {
-        CommonObject commonObject = new CommonObject();
+        CommonObjectForAnnotation commonObject = new CommonObjectForAnnotation();
         commonObject.withoutParamAndReturnValue();
         commonObject.withoutReturnValue("ARGUMENT");
         commonObject.withReturnValue("ARGUMENT");
@@ -45,12 +45,9 @@ public class CommonObject {
         } catch (Exception ignore) {
         }
 
-        commonObject.toString();
+        String s = commonObject.toString();
+        System.out.println(s);
 
-        new Object().toString();
-
-        logger.info("Inter-type, hashCode: {}", commonObject.hashCode());
-
-        CommonObject.staticMethod();
+        CommonObjectForAnnotation.staticMethod();
     }
 }
