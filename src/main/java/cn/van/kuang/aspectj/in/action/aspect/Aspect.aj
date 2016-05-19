@@ -25,8 +25,10 @@ public aspect Aspect {
 
     String around(String argument): withReturnValue(argument) {
         logger.info("~~~~~~~~~~~~~~~~BEFORE CommonObject.withReturnValue({})", argument);
+        long start = System.nanoTime();
         String result = proceed(argument);
-        logger.info("~~~~~~~~~~~~~~~~AFTER CommonObject.withReturnValue({}), Result: {}", argument, result);
+        logger.info("~~~~~~~~~~~~~~~~AFTER CommonObject.withReturnValue({}), Result: {}, took: {}ns",
+                new Object[]{argument, result, (System.nanoTime() - start)});
         return result;
     }
 
@@ -43,4 +45,21 @@ public aspect Aspect {
         logger.info("~~~~~~~~~~~~~~~~BEFORE CommonObject.toString()");
     }
 
+    pointcut combine(): execution(* cn.van.kuang.aspectj.in.action.CommonObject.combineMethod());
+
+    pointcut toString(): execution(* cn.van.kuang.aspectj.in.action.CommonObject.toString());
+
+    pointcut getAString(): execution(* cn.van.kuang.aspectj.in.action.CommonObject.getAString());
+
+    pointcut combineCflow(): cflow(combine()) && !within(Aspect);
+
+    pointcut valueOfInCombine(): combineCflow() && getAString();
+
+    before(): valueOfInCombine() {
+        logger.info("~~~~~~~~~~~~~~~~Cflow, before getAString");
+    }
+
+    after() returning(String string): valueOfInCombine() {
+        logger.info("~~~~~~~~~~~~~~~~Cflow, {}, {}", string);
+    }
 }

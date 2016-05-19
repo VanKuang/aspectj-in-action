@@ -54,4 +54,16 @@ public class AspectObject {
     public Object around(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
         return proceedingJoinPoint.proceed();
     }
+
+    @AfterReturning(
+            value = "cflow(execution(void CommonObjectForAnnotation.combineMethod())) && valueOf()",
+            returning = "member1")
+    public void combine(String member1) {
+        logger.info("member1: {}", member1);
+    }
+
+    @Pointcut("execution(* *.String.valueOf(int))")
+    void valueOf() {
+
+    }
 }

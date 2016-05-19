@@ -29,9 +29,24 @@ public class CommonObject {
         logger.info("----------Invoked staticMethod()");
     }
 
+    public String combineMethod() {
+        CommonObject commonObject = new CommonObject();
+
+        logger.info("toString()");
+        String member1 = commonObject.toString();
+        logger.info("getAStromg()");
+        String member2 = commonObject.getAString();
+
+        return member1 + "_" + member2;
+    }
+
     @Override
     public String toString() {
-        return "CommonObject{}";
+        return "CommonObject";
+    }
+
+    public String getAString() {
+        return "A";
     }
 
     public static void main(String[] args) throws CloneNotSupportedException {
@@ -46,6 +61,8 @@ public class CommonObject {
         }
 
         commonObject.toString();
+
+        System.out.println(commonObject.combineMethod());
 
         new Object().toString();
 

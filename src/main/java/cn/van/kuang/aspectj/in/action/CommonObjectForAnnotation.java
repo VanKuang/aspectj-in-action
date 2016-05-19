@@ -29,6 +29,16 @@ public class CommonObjectForAnnotation {
         logger.info("----------Invoked staticMethod()");
     }
 
+    public int combineMethod() {
+        String member1 = String.valueOf(1);
+
+        int member2 = Integer.valueOf(member1);
+
+        logger.info("{}, {}", member1, member2);
+
+        return member2;
+    }
+
     @Override
     public String toString() {
         return "CommonObjectForAnnotation{}";
@@ -47,6 +57,9 @@ public class CommonObjectForAnnotation {
 
         String s = commonObject.toString();
         System.out.println(s);
+
+        int i = commonObject.combineMethod();
+        System.out.println(i);
 
         CommonObjectForAnnotation.staticMethod();
     }
